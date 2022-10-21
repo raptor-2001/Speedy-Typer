@@ -1,0 +1,41 @@
+const easy = document.querySelector('#btn-easy');
+const medium = document.querySelector('#btn-medium');
+const hard = document.querySelector('#btn-hard');
+
+// Level Selector
+easy.addEventListener('click',selectLevel);
+medium.addEventListener('click',selectLevel);
+hard.addEventListener('click',selectLevel);
+
+function selectLevel(e) {
+
+  let level = e.target.value;
+
+  time = levels[level];
+  seconds.innerHTML = levels[level];
+
+  setLevel(level);
+
+
+}
+
+// changing the level in UI
+let prev = medium
+function setLevel(e){
+
+  prev.classList.remove('bt-selected');
+
+  console.log(e);
+  
+  if(e === 'hard'){
+    prev = hard;
+  } else if (e === 'medium') {
+    prev = medium;
+  } else {
+    prev = easy;
+  }
+  
+  prev.classList.add('bt-selected');
+  console.log(prev);
+}
+
