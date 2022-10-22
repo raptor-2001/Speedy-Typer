@@ -49,7 +49,7 @@ function init() {
 function startMatch() {
   
   if (matchWords()) {
-    showWord(words);
+    showWord();
     isPlaying = true;
     time = currentLevel + 1;
     wordInput.value = '';
