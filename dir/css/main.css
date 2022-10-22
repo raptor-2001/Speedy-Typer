@@ -1,8 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap");
 body {
-  font-family: 'Roboto Slab', serif; }
+  font-family: 'Roboto Slab', serif;
+  background-color: #242222;
+  color: #06eeee; }
+  body .title {
+    color: white;
+    font-weight: bold;
+    background-color: #6c757d;
+    border: 2px solid white; }
   body #seconds {
-    color: red !important; }
+    color: white !important; }
+  body #message {
+    color: white; }
   body .instruction-ul {
     list-style: number;
     text-align: left;
@@ -16,15 +25,16 @@ body {
       background-color: #6c757d;
       padding: 0.4rem 0.5rem;
       width: 80%;
-      border-radius: 10px; }
+      border-radius: 10px;
+      border: 2px solid white; }
     body .level-selector-container .bt:hover {
-      background-color: #8ad41b;
+      background-color: #06eeee;
       scale: 1.1;
       transition: all 0.2s ease-in-out;
       border: 1px solid white;
       color: black; }
     body .level-selector-container .bt-selected {
-      background-color: #8ad41b;
+      background-color: #06eeee;
       color: black; }
   body footer {
     max-width: 100%;

@@ -6,11 +6,11 @@ window.addEventListener('load', init);
 const levels = {
   easy: 5,
   medium: 3,
-  hard: 1
+  hard: 2
 };
 
 // To change level
-const currentLevel = levels.easy;
+let currentLevel = levels.medium;
 
 let time = currentLevel;
 let score = 0;
@@ -23,41 +23,20 @@ const scoreDisplay = document.querySelector('#score');
 const timeDisplay = document.querySelector('#time');
 const message = document.querySelector('#message');
 const seconds = document.querySelector('#seconds');
+const highscoreDisplay = document.querySelector('#highscore');
+const easy = document.querySelector('#btn-easy');
+const medium = document.querySelector('#btn-medium');
+const hard = document.querySelector('#btn-hard');
 
-const words = [
-  'hat',
-  'river',
-  'lucky',
-  'statue',
-  'generate',
-  'stubborn',
-  'cocktail',
-  'runaway',
-  'joke',
-  'developer',
-  'establishment',
-  'hero',
-  'javascript',
-  'nutrition',
-  'revolver',
-  'echo',
-  'siblings',
-  'investigate',
-  'horrendous',
-  'symptom',
-  'laughter',
-  'magic',
-  'master',
-  'space',
-  'definition'
-];
+
+
 
 // Initialize Game
 function init() {
   // Show number of seconds in UI
   seconds.innerHTML = currentLevel;
   // Load word from array
-  showWord(words);
+  showWord();
   // Start matching on word input
   wordInput.addEventListener('input', startMatch);
   // Call countdown every second
@@ -68,18 +47,37 @@ function init() {
 
 // Start match
 function startMatch() {
+  
   if (matchWords()) {
+    showWord(words);
     isPlaying = true;
     time = currentLevel + 1;
-    showWord(words);
     wordInput.value = '';
     score++;
   }
 
+  // Highscore based on score value for session storage.
+
+  if(typeof sessionStorage['highscore'] === 'undefined' || score >= sessionStorage['highscore']){
+
+    sessionStorage['highscore'] = score;
+  }
+
+  // Prevent display of High Score: -1
+  if(sessionStorage['highscore'] != -1){
+
+    highscoreDisplay.innerHTML = sessionStorage['highscore'];
+  }else{
+
+    highscoreDisplay.innerHTML = 0;
+  }
+
   // If score is -1, display 0
   if (score === -1) {
+
     scoreDisplay.innerHTML = 0;
   } else {
+
     scoreDisplay.innerHTML = score;
   }
 }
@@ -96,11 +94,18 @@ function matchWords() {
 }
 
 // Pick & show random word
-function showWord(words) {
-  // Generate random array index
-  const randIndex = Math.floor(Math.random() * words.length);
+async function showWord() {
+
+    const response = await fetch('https://random-word-api.herokuapp.com/word',
+    {
+        method: 'GET',
+    }
+  );
+
+  const data = await response.json();
+
   // Output random word
-  currentWord.innerHTML = words[randIndex];
+  currentWord.innerHTML = data[0];
 }
 
 // Countdown timer
@@ -120,7 +125,47 @@ function countdown() {
 // Check game status
 function checkStatus() {
   if (!isPlaying && time === 0) {
-    message.innerHTML = 'Game Over!!!';
+    message.innerHTML = `Game Over!!!
+      <br><br>
+      <h6>To Restart The Game Type The Displayed Word</h6>
+    `;
     score = -1;
   }
+}
+
+// change levels
+
+easy.addEventListener('click', setLevel);
+medium.addEventListener('click', setLevel);
+hard.addEventListener('click', setLevel);
+
+// function to change the value of level
+
+let prev = medium
+function setLevel(e){
+
+  prev.classList.remove('bt-selected');
+  
+  if(e === 'hard'){
+
+    prev = hard;
+    currentLevel = 2;
+  } else if (e === 'medium') {
+
+    prev = medium;
+    currentLevel = 3;
+  } else {
+
+    prev = easy;
+    currentLevel = 5;
+  }
+
+  seconds.innerHTML = currentLevel;
+  score = 0;
+  highscoreDisplay.innerHTML = score;
+  sessionStorage['highscore'] = score;
+  scoreDisplay.innerHTML = score;
+
+  prev.classList.add('bt-selected');
+  
 }
