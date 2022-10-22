@@ -2,7 +2,7 @@
 It's a typing game from the follow up tutorial of Brad Traversy.
 
 # New changes
-Added level selector.
+Added level selector.<br>
 Fetching word using API.
 
 # About
