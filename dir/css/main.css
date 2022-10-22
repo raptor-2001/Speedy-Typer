@@ -6,8 +6,7 @@ body {
   body .title {
     color: white;
     font-weight: bold;
-    background-color: #6c757d;
-    border: 2px solid white; }
+    background-color: #6c757d; }
   body #seconds {
     color: white !important; }
   body #message {
